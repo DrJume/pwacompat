@@ -79,7 +79,9 @@ function unused() {
    * @return {string|undefined}
    */
   function store(k, v) {
-    const key = '__pwacompat_' + k;
+    let cacheScope = window.pwacompat ? window.pwacompat.cacheScope : undefined;
+    if (cacheScope === undefined) cacheScope = '';
+    const key = '__pwacompat_' + cacheScope + (cacheScope ? '_' : '') + k;
     if (v !== undefined) {
       internalStorage[key] = v;
     }

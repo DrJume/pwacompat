@@ -4,3 +4,4 @@ testrunner.*
 yarn.lock
 test/
 src/suite.*
+.vscode/
