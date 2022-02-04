@@ -30,7 +30,9 @@ function unused() {
 (function() {
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
-  if (!('onload' in XMLHttpRequest.prototype) || navigator.standalone) {
+  //    UPDATE: don't, so that 'apple-touch-icon' meta tag gets set when using NetworkFirst caching,
+  //            which allows updating the icon on the home screen
+  if (!('onload' in XMLHttpRequest.prototype) /* || navigator.standalone */) {
     return;
   }
 
