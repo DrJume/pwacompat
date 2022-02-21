@@ -1,6 +1,6 @@
 {
   "name": "@drjume/pwacompat",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "library to bring Web App Manifest contents to non-compliant browsers",
   "main": "src/pwacompat.js",
   "module": "src/pwacompat.js",
