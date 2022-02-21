@@ -462,7 +462,12 @@ function unused() {
 
       img.src = icon.href;  // trigger load
     }
+
+    if (document.readyState === 'complete') {
     fetchIconAndBuildSplash();
+    } else {
+      window.addEventListener('load', fetchIconAndBuildSplash);
+    }
   }
 
   function findAppleId(related) {
@@ -596,9 +601,9 @@ function unused() {
   }
 
   // actually run PWACompat here
-  if (document.readyState === 'complete') {
+  // if (document.readyState === 'complete') {
     setup();
-  } else {
-    window.addEventListener('load', setup);
-  }
+  // } else {
+  // window.addEventListener('load', setup);
+  // }
 }());
