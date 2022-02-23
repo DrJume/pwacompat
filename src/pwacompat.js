@@ -27,7 +27,7 @@ function unused() {
   `Please don't use this file directly: include pwacompat.min.js instead!`;
 }
 
-(function() {
+(function () {
   // basic feature detection: from IE10+
   // also fallout on 'navigator.standalone', we _are_ an iOS PWA
   //    UPDATE: don't, so that 'apple-touch-icon' meta tag gets set when using NetworkFirst caching,
@@ -57,7 +57,7 @@ function unused() {
   let internalStorage;
   try {
     internalStorage = sessionStorage;
-  } catch (e) {}
+  } catch (e) { }
   internalStorage = internalStorage || {};
 
   /**
@@ -138,7 +138,7 @@ function unused() {
       try {
         new URL('', opt);
         return (part) => (new URL(part || '', opt)).toString();
-      } catch (e) {}
+      } catch (e) { }
     }
     return (part) => part || '';
   }
@@ -166,7 +166,7 @@ function unused() {
       if (content === true) {
         content = 'yes';
       }
-      push('meta', {name, content}, `[name="${name}"]`);
+      push('meta', { name, content }, `[name="${name}"]`);
     }
   }
 
@@ -201,12 +201,12 @@ function unused() {
       .map(normalizeIcon)
       .sort((a, b) => b.largestSize - a.largestSize);
 
-    const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1)
+    const icons = allIcons.filter((icon) => icon.purpose.indexOf('any') > -1);
     const maskable = allIcons.filter((icon) => icon.purpose.indexOf('maskable') > -1);
 
     const appleTouchIcons = (maskable.length > 0 ? maskable : icons).map((icon) => {
       // create regular link icons as byproduct
-      const attr = {'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes']};
+      const attr = { 'rel': 'icon', 'href': urlFactory(icon['src']), 'sizes': icon['sizes'] };
       // This checks for matching "rel" and "sizes". We don't check for the same image file, as
       // it is used literally by ourselves (and could be set by users for another icon).
       const querySuffix = `[sizes="${icon['sizes']}"]`;
@@ -232,13 +232,13 @@ function unused() {
     const display = manifest['display'];
     const isCapable = capableDisplayModes.indexOf(display) !== -1;
     meta('mobile-web-app-capable', isCapable);
-    updateThemeColorRender(/** @type {string} */ (manifest['theme_color']) || 'black', viewportFitCover);
+    updateThemeColorRender(/** @type {string} */(manifest['theme_color']) || 'black', viewportFitCover);
 
     if (isIEOrEdge) {
       // Pinned Sites, largely from https://technet.microsoft.com/en-us/windows/dn255024(v=vs.60)
       meta('application-name', manifest['short_name']);
       meta('msapplication-tooltip', manifest['description']);
-      meta('msapplication-starturl', urlFactory(/** @type {string} */ (manifest['start_url']) || '.'));
+      meta('msapplication-starturl', urlFactory(/** @type {string} */(manifest['start_url']) || '.'));
       meta('msapplication-navbutton-color', manifest['theme_color']);
 
       const largest = icons[0];
@@ -287,7 +287,7 @@ function unused() {
      */
     function splashFor(width, height, orientation, icon) {
       const ratio = window.devicePixelRatio;
-      const ctx = contextForCanvas({width: width * ratio, height: height * ratio});
+      const ctx = contextForCanvas({ width: width * ratio, height: height * ratio });
 
       ctx.scale(ratio, ratio);
       ctx.fillStyle = backgroundColor;
@@ -383,7 +383,7 @@ function unused() {
         // ignore, some problem with the JSON
       }
     }
-    const update = {'i': {}};
+    const update = { 'i': {} };
 
     /**
      * @param {?Image} applicationIcon
@@ -464,7 +464,7 @@ function unused() {
     }
 
     if (document.readyState === 'complete') {
-    fetchIconAndBuildSplash();
+      fetchIconAndBuildSplash();
     } else {
       window.addEventListener('load', fetchIconAndBuildSplash);
     }
@@ -473,23 +473,23 @@ function unused() {
   function findAppleId(related) {
     let itunes;
     (related || [])
-        .filter((app) => app['platform'] === 'itunes')
-        .forEach((app) => {
-          if (app['id']) {
-            itunes = app['id'];
-          } else {
-            const match = app['url'].match(/id(\d+)/);
-            if (match) {
-              itunes = match[1];
-            }
+      .filter((app) => app['platform'] === 'itunes')
+      .forEach((app) => {
+        if (app['id']) {
+          itunes = app['id'];
+        } else {
+          const match = app['url'].match(/id(\d+)/);
+          if (match) {
+            itunes = match[1];
           }
-        });
+        }
+      });
     return itunes;
   }
 
   function simpleOrientationFor(v) {
     const prefix = String(v || '').substr(0, 3);
-    return {'por': 'portrait', 'lan': 'landscape'}[prefix] || '';
+    return { 'por': 'portrait', 'lan': 'landscape' }[prefix] || '';
   }
 
   /**
@@ -514,7 +514,7 @@ function unused() {
       }
       // Foreground is black if theme is light, otherwise white.
       const v = themeIsLight ? 255 : 0;
-      t.foregroundColor = /** @type {WindowsColor} */ ({'r': v, 'g': v, 'b': v, 'a': 255});
+      t.foregroundColor = /** @type {WindowsColor} */ ({ 'r': v, 'g': v, 'b': v, 'a': 255 });
       t.backgroundColor = colorToWindowsRGBA(color);
     }
   }
@@ -574,7 +574,7 @@ function unused() {
     return contrast > 3;
   }
 
-  function updateTransparent(image, background, force=false) {
+  function updateTransparent(image, background, force = false) {
     const context = contextForCanvas(image);
     context.drawImage(image, 0, 0);
 
@@ -593,7 +593,7 @@ function unused() {
     return context.canvas.toDataURL();
   }
 
-  function contextForCanvas({width, height} = {width: 1, height: 1}) {
+  function contextForCanvas({ width, height } = { width: 1, height: 1 }) {
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
@@ -602,7 +602,7 @@ function unused() {
 
   // actually run PWACompat here
   // if (document.readyState === 'complete') {
-    setup();
+  setup();
   // } else {
   // window.addEventListener('load', setup);
   // }
